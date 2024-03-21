@@ -3,28 +3,32 @@ package com.eragapati.provider.foo;
 import com.eragapati.provider.foo.controller.FooController;
 import com.eragapati.provider.foo.entity.FooGreeting;
 import com.eragapati.provider.foo.repository.FooRepository;
-import com.eragapati.provider.foo.service.FooService;
 import io.restassured.module.webtestclient.RestAssuredWebTestClient;
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.r2dbc.AutoConfigureDataR2dbc;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.PropertySource;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@WebFluxTest(value = FooController.class)
+@AutoConfigureDataR2dbc
 public class FooProviderContractRunner {
+
+    @MockBean
+    FooRepository fooRepository;
+
+    @Autowired
+    FooController fooController;
 
     @BeforeEach
     public void setup() {
-        FooRepository fooRepository = mock(FooRepository.class);
-        RestAssuredWebTestClient.standaloneSetup(new FooController(new FooService(fooRepository)));
+        RestAssuredWebTestClient.standaloneSetup(fooController);
 
         // Note: We always mocked outbound calls such as database or http call,
         // not the logic inside our controller or service class
@@ -41,5 +45,4 @@ public class FooProviderContractRunner {
                                 "BarService")
                 ));
     }
-
 }
