@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 public class FooClient {
 
@@ -13,13 +15,12 @@ public class FooClient {
         this.fooWebClient = webClientBuilder.baseUrl("http://localhost:8080").build();
     }
 
-    public Mono<FooClientResponse> getFooResponse(String message, String from){
+    public Mono<FooClientResponse> getFooResponse(UUID id){
         return fooWebClient
                 .get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/api/foo/greeting")
-                        .queryParam("message", message)
-                        .queryParam("from", from)
+                        .queryParam("id", id)
                         .build())
                 .retrieve()
                 .bodyToMono(FooClientResponse.class);

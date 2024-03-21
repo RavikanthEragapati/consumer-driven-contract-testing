@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Slf4j
 @RestController
 @RequestMapping(path = "/api/bar/greeting", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -21,9 +23,11 @@ public class BarController {
     private final FooClient fooClient;
 
     @GetMapping
-    public Mono<BarResponse> barGreetings(){
+    public Mono<BarResponse> barGreetings() {
         log.info("Calling Provider Foo");
-        return fooClient.getFooResponse("Bar says Hi", "BarService")
+        return fooClient.getFooResponse(UUID.fromString("edad1da9-c7da-4358-9f15-ec3596e37ff6"))
                 .flatMap(fooResponse -> Mono.just(new BarResponse(fooResponse.id(), fooResponse.greeting())));
     }
+
+    //curl --location 'localhost:8081/api/bar/greeting'
 }

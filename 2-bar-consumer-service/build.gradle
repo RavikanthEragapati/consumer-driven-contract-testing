@@ -19,6 +19,9 @@ configurations {
 
 repositories {
 	mavenCentral()
+	flatDir {
+		dirs '/Users/ravieragapati/MyPOC/consumer-driven-contract-testing/2-bar-consumer-service/src/test/resources/'
+	}
 }
 
 ext {
@@ -32,6 +35,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
+	implementation name: '1-foo-provider-service-1.0.0-stubs'
 }
 
 dependencyManagement {

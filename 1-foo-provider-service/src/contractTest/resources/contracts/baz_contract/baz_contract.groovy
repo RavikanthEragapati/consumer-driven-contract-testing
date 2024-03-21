@@ -26,9 +26,9 @@ org.springframework.cloud.contract.spec.Contract.make {
         println response.body
         status OK()
         body(
-                "id" : $(producer(regex(UUID_REGEXP))),
-                "greeting" : $(producer(regex(ALPHA_NUMERIC_UNDERSCORE_REGEXP))),
-                "fromService" : $(producer(regex(ALPHA_NUMERIC_REGEXP)))
+                "id" : '3ecbaa20-3157-49a7-b8bf-eeeca9170de4',
+                "greeting" : 'Foo says - Hello',
+                "fromService" : 'FooService'
 
         )
         headers {

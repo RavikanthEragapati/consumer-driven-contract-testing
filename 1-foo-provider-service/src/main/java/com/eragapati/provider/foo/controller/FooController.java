@@ -25,6 +25,5 @@ public class FooController {
         log.info("received call for {}", id);
         return fooService.getFooService(id);
     }
-
-
+    // curl --location 'localhost:8080/api/foo/greeting?id=edad1da9-c7da-4358-9f15-ec3596e37ff6'
 }
